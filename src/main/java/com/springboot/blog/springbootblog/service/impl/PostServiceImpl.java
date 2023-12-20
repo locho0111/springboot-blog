@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.springboot.blog.springbootblog.entity.Post;
+import com.springboot.blog.springbootblog.exception.ResourceNotFoundException;
 import com.springboot.blog.springbootblog.payload.PostDto;
 import com.springboot.blog.springbootblog.repository.PostRepository;
 import com.springboot.blog.springbootblog.service.PostService;
@@ -61,6 +62,29 @@ public class PostServiceImpl implements PostService {
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
         return post;
+    }
+
+    @Override
+    public PostDto getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return mapToDto(post);
+    }
+
+    @Override
+    public PostDto updatePost(PostDto postDto, long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+
+        post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
+        post.setContent(postDto.getContent());
+
+        Post updatedPost = postRepository.save(post);
+        return mapToDto(updatedPost);
+    }
+
+    @Override
+    public void deletePostById(long id) {
+        postRepository.deleteById(id);
     }
 
 }
