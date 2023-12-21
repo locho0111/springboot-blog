@@ -1,5 +1,8 @@
 package com.springboot.blog.springbootblog.payload;
 
+import java.util.List;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +16,6 @@ public class PostDto {
     private String title;
     private String description;
     private String content;
+    private List<CommentDto> comments;
 
 }
