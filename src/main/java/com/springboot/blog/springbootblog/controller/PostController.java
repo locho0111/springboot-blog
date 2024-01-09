@@ -1,5 +1,7 @@
 package com.springboot.blog.springbootblog.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,5 +66,12 @@ public class PostController {
     public ResponseEntity<String> deletePost(@PathVariable long id) {
         postService.deletePost(id);
         return ResponseEntity.ok("Post entity deleted successfully.");
+    }
+
+    // Build Get posts by Category REST API
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable(name = "id") Long categoryId) {
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        return ResponseEntity.ok(postDtos);
     }
 }

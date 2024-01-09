@@ -2,6 +2,8 @@ package com.springboot.blog.springbootblog.payload;
 
 import java.util.List;
 
+import com.springboot.blog.springbootblog.entity.Category;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,8 @@ public class PostDto {
 
     @NotEmpty
     private String content;
+
+    private Long categoryId;
 
     private List<CommentDto> comments;
 

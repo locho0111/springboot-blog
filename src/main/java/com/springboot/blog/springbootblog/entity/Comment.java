@@ -33,7 +33,7 @@ public class Comment {
     @Column(name = "body", nullable = true)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 }
