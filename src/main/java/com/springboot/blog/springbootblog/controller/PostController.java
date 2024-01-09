@@ -20,10 +20,15 @@ import com.springboot.blog.springbootblog.payload.PostResponse;
 import com.springboot.blog.springbootblog.service.PostService;
 import com.springboot.blog.springbootblog.utils.AppConstants;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "CRUD REST APIs for Post Resource")
 public class PostController {
 
     private PostService postService;
@@ -33,6 +38,9 @@ public class PostController {
     }
 
     // create POST post api
+    @Operation(summary = "Create Post REST API", description = "Create Post REST API")
+    @ApiResponse(responseCode = "201", description = "Http Status 201 CREATED")
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
@@ -49,6 +57,8 @@ public class PostController {
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
+    @Operation(summary = "Get Post by Id REST API", description = "Get Post by Id REST API is used to get a single Post from the database")
+    @ApiResponse(responseCode = "200", description = "Http Status 200 SUCCESS")
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPostById(id));
@@ -61,6 +71,7 @@ public class PostController {
         return ResponseEntity.ok(postResponse);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deletePost(@PathVariable long id) {
