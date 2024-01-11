@@ -14,9 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @Getter
 @Setter
 @AllArgsConstructor
